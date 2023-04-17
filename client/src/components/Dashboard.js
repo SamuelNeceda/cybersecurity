@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {toast} from "react-toastify";
 import Footer from "./Footer";
+import UrlInput from "./UrlInput";
 
 const Dashboard = ({setAuth}) => {
     const [name, setName] = useState(""); // Defining state for user's name
@@ -42,6 +43,9 @@ const Dashboard = ({setAuth}) => {
                     style={{position: "absolute", top: "30px", right: "30px"}}>
                 Logout
             </button>
+            <div className="my-5">
+                <UrlInput/>
+            </div>
             <Footer/>
         </div>
     );

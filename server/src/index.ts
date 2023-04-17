@@ -20,6 +20,9 @@ app.use(express.urlencoded({extended: true})); // Parse incoming request body as
 // ROUTES
 app.use("/auth", require("./routes/jwtAuth"));
 app.use("/dashboard", require("./routes/dashboard"));
+app.use("/health", require("./routes/health"));
+app.use("/api/users", require("./routes/users"));
+app.use("/url", require("./routes/externalSource"));
 
 // Starting the server and listening for incoming requests on the defined port
 try {

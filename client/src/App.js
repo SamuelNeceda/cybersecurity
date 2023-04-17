@@ -1,5 +1,7 @@
-import './App.css';
-import React, {Fragment, useState, useEffect} from 'react';
+import React, {useState, useEffect} from "react";
+import "./App.css";
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     BrowserRouter as Router,
     Route,
@@ -9,8 +11,8 @@ import {
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import {ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Welcome from "./components/Welcome";
+import ScrollToTop from "./components/scrollToTop";
 
 function App() {
 
@@ -42,13 +44,18 @@ function App() {
     };
 
     return (
-        <Fragment>
+        <>
             <Router>
+                <ScrollToTop/>
                 <div className="container">
-
-                    {/* Define routes using the Switch and Route components from react-router-dom */}
                     <Switch>
-                        {/* If the user is not authenticated, display the Login component */}
+                        <Route
+                            exact
+                            path="/"
+                            render={(props) =>
+                                <Welcome {...props}/>
+                            }
+                        />
                         <Route
                             exact
                             path="/login"
@@ -56,12 +63,10 @@ function App() {
                                 !isAuthenticated ? (
                                     <Login {...props} setAuth={setAuth}/>
                                 ) : (
-                                    /* If the user is authenticated, redirect to the Dashboard component */
                                     <Redirect to="/dashboard"/>
                                 )
                             }
                         />
-                        {/* If the user is not authenticated, display the Register component */}
                         <Route
                             exact
                             path="/register"
@@ -69,12 +74,10 @@ function App() {
                                 !isAuthenticated ? (
                                     <Register {...props} setAuth={setAuth}/>
                                 ) : (
-                                    /* If the user is authenticated, redirect to the Login component */
                                     <Redirect to="/login"/>
                                 )
                             }
                         />
-                        {/* If the user is authenticated, display the Dashboard component */}
                         <Route
                             exact
                             path="/dashboard"
@@ -82,7 +85,6 @@ function App() {
                                 isAuthenticated ? (
                                     <Dashboard {...props} setAuth={setAuth}/>
                                 ) : (
-                                    /* If the user is not authenticated, redirect to the Login component */
                                     <Redirect to="/login"/>
                                 )
                             }
@@ -91,8 +93,9 @@ function App() {
                 </div>
             </Router>
             <ToastContainer/>
-        </Fragment>
+        </>
     );
 }
 
 export default App;
+

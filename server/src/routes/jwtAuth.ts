@@ -32,15 +32,16 @@ router.post("/register",inputValidation, async (req, res) => {
             return res.status(401).json("User is already registered.");
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const bcryptPassword = await bcrypt.hash(password, salt);
+        // const salt = await bcrypt.genSalt(10);
+        // const bcryptPassword = await bcrypt.hash(password, salt);
 
         const insertStatus = status ?? "patient"
         let uniqueUser = await pool.query(
             "INSERT INTO useraccount (email, password, firstname, lastname, title, birthdate, phone, sex, status, birthnumber) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
             [
                 email,
-                bcryptPassword,
+                password,
+                // bcryptPassword,
                 firstname,
                 lastname,
                 title,
@@ -78,7 +79,8 @@ router.post("/login", inputValidation, async (req, res) => {
             return res.status(401).json("Invalid email.");
         }
 
-        const validPassword = await bcrypt.compare(password, user.rows[0].password);
+        // const validPassword = await bcrypt.compare(password, user.rows[0].password);
+        const validPassword = password === user.rows[0].password;
 
         if (!validPassword) {
             return res.status(401).json("Invalid password.");
